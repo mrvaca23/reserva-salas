@@ -1,41 +1,45 @@
-# Sistema de Reserva de Salas de Reuniones — Centro Empresarial
+# Sistema de Reserva de Salas de Reuniones - Centro Empresarial
 
-Proyecto final de Estructuras de Datos Dinámicas (Java, JDK 17+).
+## Descripción del Proyecto
+Este repositorio contiene el desarrollo del sistema backend para la gestión de reservas de salas de reuniones corporativas. El núcleo de la aplicación se ha construido aplicando el paradigma de Orientación a Objetos e implementando estructuras de datos dinámicas desde cero (sin depender de las colecciones nativas de `java.util`), garantizando un manejo eficiente y a medida de la memoria.
 
-## Estructuras de datos implementadas (desde cero, sin java.util.LinkedList/Queue)
-- **Árbol Binario de Búsqueda** (`estructuras/ArbolBinarioSalas.java`): indexa las salas por capacidad para buscar disponibilidad por aforo y hora.
-- **Lista Enlazada genérica** (`estructuras/ListaEnlazada.java`): almacena asistentes, equipos requeridos y el historial de reservas.
-- **Cola (FIFO) genérica** (`estructuras/Cola.java`): gestiona las solicitudes de reserva pendientes de aprobación.
+## Arquitectura y Estructuras de Datos
+El proyecto está desarrollado en **Java (JDK 17+)** y emplea las siguientes estructuras algorítmicas personalizadas:
 
-## Cómo compilar y ejecutar
+* **Árbol Binario de Búsqueda** (`estructuras/ArbolBinarioSalas.java`): Indexa el catálogo de salas basándose en su capacidad para agilizar de forma logarítmica la búsqueda de disponibilidad por aforo y hora.
+* **Lista Enlazada Genérica** (`estructuras/ListaEnlazada.java`): Administra dinámicamente el registro de asistentes, el equipamiento tecnológico requerido y el historial de cada reserva.
+* **Cola Estándar FIFO** (`estructuras/Cola.java`): Gestiona de manera estricta el orden de llegada de las solicitudes de reserva que se encuentran pendientes de aprobación.
 
-### Con Maven
-```
+## Características Principales
+El sistema opera de forma ágil interactuando exclusivamente en memoria principal (sin persistencia en disco o bases de datos) y cubre el siguiente flujo operativo:
+1.  **Consultar disponibilidad:** Búsqueda optimizada dentro del árbol de salas.
+2.  **Realizar reserva:** Creación y encolamiento de nuevas solicitudes.
+3.  **Aprobar reserva:** Procesamiento, desencolado y asignación final de la sala.
+4.  **Generar reporte:** Emisión de estadísticas de uso y nivel de ocupación.
+
+---
+
+## Instrucciones de Despliegue y Ejecución
+
+El proyecto está preparado para ser compilado tanto con herramientas de automatización como de forma manual mediante el kit de desarrollo estándar.
+
+### Despliegue del Entorno de Consola (CLI)
+
+**Opción A: Construcción automatizada con Maven**
+```bash
 mvn clean package
 java -jar target/reservasalas.jar
 ```
-
-### Sin Maven (javac directo)
-```
+**Opción B: Construcción automatizada con Maven**
+```bash
 find src -name "*.java" > sources.txt
 javac -d out -encoding UTF-8 @sources.txt
 java -cp out com.centroempresarial.reservasalas.app.Main
 ```
 
-## Funcionalidades
-1. Consultar disponibilidad (búsqueda en árbol de salas y horarios)
-2. Realizar reserva (encola solicitud)
-3. Aprobar reserva (desencola y asigna sala)
-4. Generar reporte de uso (estadísticas de ocupación)
+## Módulo Adicional: Interfaz Gráfica (GUI)
 
-Todos los datos se mantienen en memoria (no se usan bases de datos ni archivos en disco).
-
-## Interfaz Gráfica (Java Swing) — Puntos Extra
-
-Se agregó `app/GuiApp.java`, una interfaz gráfica de escritorio (Swing) que
-usa exactamente la misma lógica de negocio y las mismas estructuras de
-datos (`GestorReservas`, árbol, lista enlazada y cola) que la versión de
-consola. Tiene 4 pestañas, una por cada funcionalidad.
+Como valor añadido, el sistema incluye una interfaz gráfica de escritorio desarrollada bajo el framework Java Swing (app/GuiApp.java). Esta capa de presentación cuenta con navegación por pestañas y está estrictamente desacoplada; reutiliza el 100% de la lógica de negocio (GestorReservas) y las estructuras de datos de la versión de consola.
 
 ### Ejecutar la GUI
 
